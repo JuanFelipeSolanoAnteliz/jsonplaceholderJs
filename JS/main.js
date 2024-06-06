@@ -1,13 +1,18 @@
 import { getAllbums, addAlbum, deleteAlbums } from "./module/albums.js";
 import { getUser } from "./module/user.js";
 import { addPost, deletePost } from "./module/post.js";
+import { getComment, addComment } from "./module/comments.js";
 
 // console.table( await addPost({userId:"1", title:"MAÑANA NO HAY CLASE", body:"LO DIJO MIGUEL FR"}));
 // console.table(await getUser({userId:10}));
 // console.log( await deleteAlbums({id:"9f78"}))
+// console.log(await deletePost({id:"2b92"}))
+// console.table( await getComment())
+
+ console.table( await addComment({postId: "1",name:"endpoints",email:"hola",body:"profe porfa ponga los endpoints asd"}))
 
 
-console.log(await deletePost({id:"2b92"}))
+
 
 
 // -------------------------menu album------------------------------------------

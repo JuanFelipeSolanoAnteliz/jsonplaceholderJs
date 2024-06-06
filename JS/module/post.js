@@ -1,5 +1,17 @@
 import { getUser } from "./user.js";
 
+const validateGetPostid = async ({postId})=>{
+    if(typeof userId !== "string" ||postId === undefined)return{status: 406, message:`This user dosen't exist in the database`};
+};
+ 
+export const getPostId = async(arg)=>{
+    let val = await validateGetPostid(arg);
+    if(val) return val;
+    let res = await fetch(`http://172.16.101.146:5801/comments/${arg.postId}`);
+    if(res.status === 404) return {status: 204, message: `post id doesn't exist`};
+    let data = await res.json();
+    return data;
+};
 
 
 export const getPost = async()=>{
