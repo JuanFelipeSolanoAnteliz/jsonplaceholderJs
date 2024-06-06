@@ -11,6 +11,7 @@ export const getAllbums = async()=>{
 const validateAddAlbum = async({userId,title})=>{
     if(typeof userId !== "string" ||  userId === undefined)return{status: 406, message: `The data ${typeof userId} is not arriving or does not...`}
     if(typeof title !== "string" || title === undefined)return{status: 406, message: `The data ${typeof userId} is not arriving or does not...`}
+    
     let user = await getUser({userId});
     if(user.status === 204)return {status: 200, message: `the user searched not was found`}
 }

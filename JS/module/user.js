@@ -9,4 +9,4 @@ export const getUser = async(arg)=>{
     if(res.status === 404) return {status: 204, message: `Username doesn't exist`};
     let data = await res.json();
     return data;
-}
+};
