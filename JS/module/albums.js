@@ -50,3 +50,4 @@ export const deleteAlbums = async(arg)=>{
     data.message = `The album ${arg.id} was deleted correctly from de database.`
     return data;
 }
+
