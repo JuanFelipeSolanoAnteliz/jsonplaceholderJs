@@ -6,7 +6,7 @@ export const getAllbums = async()=>{
     let res = await fetch("http://172.16.101.146:5802/albums");
     let data =await res.json();
     return data;
-}
+};
 
 const validateAddAlbum = async({userId,title})=>{
     if(typeof userId !== "string" ||  userId === undefined)return{status: 406, message: `The data ${typeof userId} is not arriving or does not...`}
