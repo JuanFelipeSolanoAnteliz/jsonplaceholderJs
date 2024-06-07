@@ -64,7 +64,7 @@ export const deleteAlbums = async(arg)=>{
         headers:{"content-type": "application/json"}
     }
 
-    let res = await fetch(`hhttps://53977d67df4867e88ad92ace77f41d81.serveo.net/albums${arg.id}`,config);
+    let res = await fetch(`https://53977d67df4867e88ad92ace77f41d81.serveo.net/albums/${arg.id}`,config);
     if(res.status === 404)return `id that was provided isn't registred in the database.`
     
     let data = await res.json();
