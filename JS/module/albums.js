@@ -1,9 +1,26 @@
 import { getUser } from "./user.js";
 
+const validateGetAlbum = async ({albumId})=>{
+    if(typeof albumId !== "string" || albumId === undefined)return{status: 406, message:`This user dosen't exist in the database`};
+};
+ 
+export const getAlbumId = async(arg)=>{
+    let val = await validateGetAlbum(arg);
+    if(val) return val;
+    
+    let res = await fetch(`https://53977d67df4867e88ad92ace77f41d81.serveo.net/albums${arg.albumId}`);
+    
+    if(res.status === 404) return {status: 204, message: `Album doesn't exist`};
+    
+    let data = await res.json();
+    return data;
+};
+// --------------------fin validacion album------------------------
+
 
 
 export const getAllbums = async()=>{
-    let res = await fetch("http://172.16.101.146:5802/albums");
+    let res = await fetch("https://53977d67df4867e88ad92ace77f41d81.serveo.net/albums");
     let data =await res.json();
     return data;
 };
@@ -24,10 +41,14 @@ export const addAlbum = async(arg)=>{
         headers: {"content-type": "application/json"},
         body: JSON.stringify(arg)
     }
-    let res = await fetch("http://172.16.101.146:5802/albums",config); 
+    let res = await fetch("https://53977d67df4867e88ad92ace77f41d81.serveo.net/albums",config); 
     let data = await res.json();
     return data;
 };
+// --------------------fin add album---------------------
+
+
+
 
 const validateDeleteAlbum =({id})=>{
     if(typeof id !== "string" || id === undefined){
@@ -43,7 +64,7 @@ export const deleteAlbums = async(arg)=>{
         headers:{"content-type": "application/json"}
     }
 
-    let res = await fetch(`http://172.16.101.146:5802/albums/${arg.id}`,config);
+    let res = await fetch(`hhttps://53977d67df4867e88ad92ace77f41d81.serveo.net/albums${arg.id}`,config);
     if(res.status === 404)return `id that was provided isn't registred in the database.`
     
     let data = await res.json();

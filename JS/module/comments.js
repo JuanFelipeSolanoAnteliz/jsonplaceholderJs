@@ -7,7 +7,7 @@ export const getComment = async()=>{
 };
 
 
-export const  validateComment = async ({postId,name,email,body}) =>{
+const  validateComment = async ({postId,name,email,body}) =>{
     if(typeof postId !== "string" || postId === undefined) return{status: 406, message: `The data ${typeof userId} is not arriving or does not...`};
     if(typeof name !== "string" || name ===undefined) return {status: 406, message: `The data ${typeof userId} is not arriving or does not...`};
     if(typeof email !== "string" || email ===undefined) return {status: 406, message: `The data ${typeof userId} is not arriving or does not...`};
@@ -33,7 +33,7 @@ export const addComment = async (arg) =>{
 };
 
 
-export const validateDeleteComments = async ({idComment})=>{
+ const validateDeleteComments = async ({idComment})=>{
     if(typeof idComment !== "string" || idComment === undefined)
         return{
         status: 406, 
@@ -41,7 +41,7 @@ export const validateDeleteComments = async ({idComment})=>{
         };    
 };
 
-export const deleteAlbums =async(fireId)=>{
+export const deleteComments =async(fireId)=>{
     let val = validateDeleteComments(fireId);
     if(val) return val;
     let config ={
