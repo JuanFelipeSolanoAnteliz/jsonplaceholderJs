@@ -81,7 +81,72 @@ let menuComments= async()=>{
         return console.log(`the opcion selected isn't a valid option.`)
     }
 };
+// ------------------------------------- menuPhotos--------------------------------------
+let menuPhotos = async()=>{
+    menu = prompt(`
+    menu Photos
+1. Get 
+2. Add
+3. Delete
+`);
+if(menu == 1){
+    return await getPhotos();
+}
+else if( menu == 2){
+    let idAlbum = prompt(`Enter the album id: `);
+    let title = prompt(`Enter a title to the photo: `);
+    let url = prompt(`Enter an url: `);
+    let thumbnailUrl = prompt(`Enter a thumbnailUrl to the photo: `);
+    
+    return await addPhotos({idAlbum:idAlbum, title:title, url:url, thumbnailUrl:thumbnailUrl});
+}
+else if( menu == 3 ){ 
+let firePhoto = prompt(`Enter the comment id that you wanna delete.`);
+return await deletePhotos({firePhoto:firePhoto});
+}
 
+else{
+    return console.log(`the opcion selected isn't a valid option.`);
+}
+};
+
+let menuPosts = async()=>{
+
+    menu = prompt(`
+    menu Prost
+1. Get 
+2. Add
+3. Delete
+`);
+if(menu == 1){
+    return await getPost();
+}
+else if( menu == 2){
+    let userId = prompt(`Enter the user id: `);
+    let title = prompt(`Enter a title to the post: `);
+    let body = prompt(`Enter an url: `);
+    
+    return await addPost({userId:userId, title:title, body:body});
+}
+else if( menu == 3 ){ 
+let idpost = prompt(`Enter the comment id that you wanna delete.`);
+return await deletePost({id:idpost});
+}
+
+else{
+    return console.log(`the opcion selected isn't a valid option.`);
+}
+};
+   
+let User = async()=>{
+    let menu = prompt(`
+    user menu
+    1. Get
+    `)
+    if(prompt == 1 )return getUser();
+}
+
+//------------------------------------------- main menu----------------------------------------
 let menu = async()=>{
     let menu = prompt(`
                 menu principal
