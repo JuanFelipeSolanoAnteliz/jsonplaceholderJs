@@ -23,22 +23,6 @@ import { getPhotos,addPhotos, deletePhotos } from "./module/photos.js";
 
 // ----------------------------main menu------------------------
 
-let menu = async()=>{
-    let menu = prompt(`
-                menu principal
-    1. Albums
-    2. Comment
-    3. Photos
-    4. Posts
-    5. User
-    `)
-
-    if(menu == 1)return await menuAlbums();
-    else if(menu == 2) return await menuComments();
-    else if(menu == 3)return await menuPhotos();
-    else if(menu == 4)return await menuPosts();
-    else if(menu == 5)return await menuUser();
-};
 
 // -------------------------menu album------------------------------------------
 let menuAlbums =async()=>{
@@ -68,5 +52,50 @@ let menuAlbums =async()=>{
     }
 }
 
-console.log( await menuAlbums());
 
+// ----------------------------------------menu comments----------------------------------
+let menuComments= async()=>{
+    menu = prompt(`
+        menu Comments
+    1. Get 
+    2. Add
+    3. Delete
+    `);
+    if(menu == 1){
+        return await getComment();
+    }
+    else if( menu == 2){
+        let postId = prompt(`Enter the post id: `);
+        let name = prompt(`Enter a name: `);
+        let email = prompt(`Enter an email: `);
+        let body = prompt(`Enter a body to the comment: `);
+        
+        return await addComment({postId:postId, name:name, email:email, body:body});
+    }
+    else if( menu == 3 ){ 
+    let idComment = prompt(`Enter the comment id that you wanna delete.`)
+    return await deleteComments({fireId:idComment})
+    }
+
+    else{
+        return console.log(`the opcion selected isn't a valid option.`)
+    }
+};
+
+let menu = async()=>{
+    let menu = prompt(`
+                menu principal
+    1. Albums
+    2. Comment
+    3. Photos
+    4. Posts
+    5. User
+    `)
+
+    if(menu == 1)return await menuAlbums();
+    else if(menu == 2) return await menuComments();
+    else if(menu == 3)return await menuPhotos();
+    else if(menu == 4)return await menuPosts();
+    else if(menu == 5)return await menuUser();
+};
+await menu();
