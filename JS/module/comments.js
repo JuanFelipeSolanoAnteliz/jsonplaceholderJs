@@ -1,7 +1,7 @@
 import { getPost } from "./post.js"
 
-export const getComment = async()=>{
-    let res = await fetch("http://172.16.101.146:5801/comments");
+export const getComment = async(idComment)=>{
+    let res = await fetch(`http://172.16.101.146:5801/comments/${idComment}`);
     let data = await res.json();
     return data;
 };
