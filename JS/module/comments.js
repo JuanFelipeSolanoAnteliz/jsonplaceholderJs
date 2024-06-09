@@ -15,10 +15,10 @@ const validateGetcomment = async ({commentId}) => {
 export const getCommentId = async (arg) =>{
     let val = await validateGetcomment(arg);
     if(val)return val;
-
     let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${arg.commentId}`);
     let data = await res.json();
     return data;
+
 };
 // ------------------------------------------------------- fin get comment -----------------------------------------------
 const  validateAddComment = async ({postId,name,email,body}) =>{
@@ -50,30 +50,31 @@ export const addComment = async (arg) =>{
 };
 
 // ---------------------------------------------- fin add comments ----------------------------------------------
- const validateDeleteComments = async ({idComment})=>{
-    if(typeof idComment !== "string" || idComment === undefined)
-        return{
-        status: 406, 
-        message: `The id that was provided doesn't meet the correct argument to be found.`
-        };    
+
+const validateDelete=async(id)=>{
+    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${id}`)
+    if(!res.ok)
+        return {
+                status:204,
+                message:`The comment with id ${id} wasn't found min the database :/`
+               };
 };
 
-export const deleteComments =async(fireId)=>{
-    let val = validateDeleteComments(fireId);
+export const deleteComments = async (idComment)=>{
+    let val= await validateDelete(idComment);
     if(val) return val;
-    let config ={
-        method:"DELETE",
-        headers:{"content-type": "application/json"}
-    };
 
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${fireId.idComment}`,config);
-    if(res.status === 404)return `id that was provided isn't registred in the database.`
-    
-    let data = await res.json();
-    data.status = 202;
-    data.message = `The album ${fireId.idComment} was deleted correctly from de database.`
-    return data;
+    let config={
+        method: "DELETE",
+        hraders:{"content-type": "application/json"}
+    };
+    let confirmation = confirm(`are you sure that you want to delete the comment with id ${idComment}?`);
+    if(confirmation===true){
+        let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${idComment}`,config);
+        let data = res.json();
+        return `${JSON.stringify(data)} was deleted successfully!`
+    }
+    else return `operacion cancelada :[`
 };
 
-
-
+ 

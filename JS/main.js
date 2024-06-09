@@ -70,8 +70,8 @@ let menuComments= async()=>{
         return await addComment({postId:postId, name:name, email:email, body:body});
     }
     else if( menu == 3 ){ 
-    let idComment = prompt(`Enter the comment id that you wanna delete.`)
-    return await deleteComments({fireId:idComment})
+    let commentId = prompt(`Enter the comment id that you wanna delete.`)
+    return alert(await deleteComments(commentId))
     }
 
     else{
