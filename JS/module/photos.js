@@ -16,7 +16,7 @@ export const getPhotosId = async(idPhoto)=>{
     }
     else{
         let data = await res.json();
-        return alert();
+        return alert(JSON.stringify(data));
     };
 };
 
@@ -56,28 +56,24 @@ export const addPhotos = async(newPhoto)=>{
 //-----------------------fin add Photos------------
 
 const validateDeletePhotos = async(idPhoto)=>{
-    if(typeof idPhoto !== "string" || idPhoto === undefined)
-        return {
-        status: 406, 
-        message: `The id that was provided doesn't meet the correct argument to be found.`
-        };
+    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/photos/${idPhoto}`)
+    if(!res.ok)return{status: 204, message: `Id wasn't found in the database`}
 };
 
 export const deletePhotos = async (firePhoto)=>{
 
-    let val =  validateDeletePhotos(firePhoto);
-    if(val)return val;
-    
+    let val =  await validateDeletePhotos(firePhoto);
+    if(val)return alert(JSON.stringify(val));
     let config ={
         method: "DELETE",
         headers: {"content-type": "application/json"}
     };
 
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/photos/${firePhoto.idPhoto}`,config);
+    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/photos/${firePhoto}`,config);
     if(res.status === 404)return `id that was provided isn't registred in the database.`
 
     let data = await res.json();
     data.status = 202
-    data.message = `The album ${firePhoto.idPhoto} was deleted correctly from de database.`
-    return data;
+    data.message = `The album ${firePhoto} was deleted correctly from de database.`
+    return alert(JSON.stringify(data)+` Was deleted successfuly!`);
 };

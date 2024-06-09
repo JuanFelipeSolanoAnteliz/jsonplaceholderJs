@@ -100,7 +100,7 @@ else if( menu == 2){
 }
 else if( menu == 3 ){ 
 let firePhoto = prompt(`Enter the comment id that you wanna delete.`);
-return await deletePhotos({firePhoto:firePhoto});
+return await deletePhotos(firePhoto);
 }
 
 else{
