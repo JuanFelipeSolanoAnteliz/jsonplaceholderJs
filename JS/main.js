@@ -1,8 +1,8 @@
 import { getAllbums,getAlbumId, addAlbum, deleteAlbums } from "./module/albums.js";
 import { getComment,getCommentId , addComment, deleteComments } from "./module/comments.js";
+import { getPhotos,getPhotosId,addPhotos, deletePhotos } from "./module/photos.js";
 import { getUser } from "./module/user.js";
 import { addPost, deletePost } from "./module/post.js";
-import { getPhotos,addPhotos, deletePhotos } from "./module/photos.js";
 
 // console.table(await getUser({userId:"10"}));
 
@@ -87,7 +87,8 @@ let menuPhotos = async()=>{
 3. Delete
 `);
 if(menu == 1){
-    return await getPhotos();
+    let search = prompt(`Enter the id photo that you want to find: `)
+    return await getPhotosId(search);
 }
 else if( menu == 2){
     let idAlbum = prompt(`Enter the album id: `);
