@@ -1,7 +1,7 @@
 import { getAllbums,getAlbumId, addAlbum, deleteAlbums } from "./module/albums.js";
+import { getComment,getCommentId , addComment, deleteComments } from "./module/comments.js";
 import { getUser } from "./module/user.js";
 import { addPost, deletePost } from "./module/post.js";
-import { getComment, addComment, deleteComments } from "./module/comments.js";
 import { getPhotos,addPhotos, deletePhotos } from "./module/photos.js";
 
 // console.table(await getUser({userId:"10"}));
@@ -21,18 +21,17 @@ import { getPhotos,addPhotos, deletePhotos } from "./module/photos.js";
 
 
 
-// ----------------------------main menu------------------------
+// --------------------------------------  menu -----------------------------------------
 
-
-// -------------------------menu album------------------------------------------
+// -------------------------------------- menu album ------------------------------------
 let menuAlbums =async()=>{
     
     let menu = prompt(`
-    Album menu 
+        Album menu 
     1. get.
     2. Add.
     3. Delete.
-    `)
+    `);
         if(menu == 1){
             let search = prompt(`Enter the album id that you wanna search: `);
             alert(JSON.stringify(await getAlbumId({albumId:search})));
@@ -50,9 +49,7 @@ let menuAlbums =async()=>{
         return alert(`the opcion selected isn't a valid option.`)
     }
 }
-
-
-// ----------------------------------------menu comments----------------------------------
+// -------------------------------------- menu comments ---------------------------------
 let menuComments= async()=>{
     menu = prompt(`
         menu Comments
@@ -61,7 +58,8 @@ let menuComments= async()=>{
     3. Delete
     `);
     if(menu == 1){
-        alert(JSON.stringify(await getComment()));
+        let search = prompt(`Enter the coment id that you want to search: `)
+        alert(JSON.stringify(await getCommentId({commentId:search})));
     }
     else if( menu == 2){
         let postId = prompt(`Enter the post id: `);
@@ -80,7 +78,7 @@ let menuComments= async()=>{
         return console.log(`the opcion selected isn't a valid option.`)
     }
 };
-// ------------------------------------- menuPhotos--------------------------------------
+// ------------------------------------- menuPhotos -------------------------------------
 let menuPhotos = async()=>{
     menu = prompt(`
     menu Photos
@@ -108,7 +106,7 @@ else{
     return console.log(`the opcion selected isn't a valid option.`);
 }
 };
-
+// ------------------------------------ menu posts ---------------------------------------
 let menuPosts = async()=>{
 
     menu = prompt(`
@@ -136,7 +134,7 @@ else{
     return console.log(`the opcion selected isn't a valid option.`);
 }
 };
-   
+// ------------------------------------ menu users ---------------------------------------
 let menuUser = async()=>{
     let menu = prompt(`
     user menu

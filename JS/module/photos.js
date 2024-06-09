@@ -2,7 +2,7 @@ import { getAlbumId, getAllbums, } from "./albums.js";
 
 export const getPhotos =async()=>{
     
-    let res = await fetch("https://eeb0d5d633a3ac44a1c6ad64f07d43a4.serveo.net/photos");
+    let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/photos");
     let  data = res.json();
     return data;
 
@@ -31,7 +31,7 @@ export const addPhotos = async(newPhoto)=>{
         headers: {"content-type": "application/json"},
         body: JSON.stringify(newPhoto)
     };
-    let res = await fetch("https://eeb0d5d633a3ac44a1c6ad64f07d43a4.serveo.net/photos",config);
+    let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/photos",config);
     let data = res.json();
     return data;
 };
@@ -55,7 +55,7 @@ export const deletePhotos = async (firePhoto)=>{
         headers: {"content-type": "application/json"}
     };
 
-    let res = await fetch(`https://eeb0d5d633a3ac44a1c6ad64f07d43a4.serveo.net/photos/${firePhoto.idPhoto}`,config);
+    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/photos/${firePhoto.idPhoto}`,config);
     if(res.status === 404)return `id that was provided isn't registred in the database.`
 
     let data = await res.json();

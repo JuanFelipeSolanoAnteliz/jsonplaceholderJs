@@ -8,7 +8,7 @@ export const getAlbumId = async(arg)=>{
     let val = await validateGetAlbum(arg);
     if(val) return val;
     
-    let res = await fetch(`https://53977d67df4867e88ad92ace77f41d81.serveo.net/albums/${arg.albumId}`);
+    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/albums/${arg.albumId}`);
     if(res.status === 404) return {status: 204, message: `Album doesn't exist`};
     
     let data = await res.json();
@@ -19,7 +19,7 @@ export const getAlbumId = async(arg)=>{
 
 
 export const getAllbums = async()=>{
-    let res = await fetch("https://53977d67df4867e88ad92ace77f41d81.serveo.net/albums");
+    let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/albums");
     let data =await res.json();
     return data;
 };
@@ -40,10 +40,10 @@ export const addAlbum = async(arg)=>{
         headers: {"content-type": "application/json"},
         body: JSON.stringify(arg)
     };
-    let confirmation = confirm(`Are you sure that you wanna add ${JSON.stringify(arg)}) ?`);
+    let confirmation = confirm(`Are you sure that you wanna add ${JSON.stringify(arg)}?`);
     if(confirmation === true){
 
-        let res = await fetch("https://53977d67df4867e88ad92ace77f41d81.serveo.net/albums",config); 
+        let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/albums",config); 
         let data = await res.json();
         return data;
 
@@ -71,7 +71,7 @@ export const deleteAlbums = async(arg)=>{
     let confirmation = confirm(`Are you sure that you wanna delete ${JSON.stringify(arg)}?`)
     if(confirmation === true){
 
-        let res = await fetch(`https://53977d67df4867e88ad92ace77f41d81.serveo.net/albums/${arg.id}`,config);
+        let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/albums/${arg.id}`,config);
         if(res.status === 404)return `id that was provided isn't registred in the database.` 
         let data = await res.json();
         data.status = 202
@@ -102,7 +102,7 @@ export const updateAlbum = async (albumUpdated) =>{
     };
     let confirm = confirm(`Are you sure that you wanna update ${JSON.stringify(albumUpdated)}?`);
     if(confirm === true ){
-        let res = await fetch(`https://53977d67df4867e88ad92ace77f41d81.serveo.net/albums/${{albumId}}`,config)
+        let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/albums/${{albumId}}`,config)
         let data = res.json();
         return data
     };

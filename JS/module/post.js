@@ -7,7 +7,7 @@ const validateGetPostid = async ({postId})=>{
 export const getPostId = async(arg)=>{
     let val = await validateGetPostid(arg);
     if(val) return val;
-    let res = await fetch(`http://172.16.101.146:5801/comments/${arg.postId}`);
+    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${arg.postId}`);
     if(res.status === 404) return {status: 204, message: `post id doesn't exist`};
     let data = await res.json();
     return data;
@@ -15,7 +15,7 @@ export const getPostId = async(arg)=>{
 
 
 export const getPost = async()=>{
-    let res = await fetch("https://ea9cb12e1fd707dd59cabd0bcfaca5bf.serveo.net/posts");
+    let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/posts");
     let data =await res.json();
     return data;
 }
@@ -38,7 +38,7 @@ export const addPost = async(arg)=>{
         body: JSON.stringify(arg)
 
     }
-    let res = await fetch("https://ea9cb12e1fd707dd59cabd0bcfaca5bf.serveo.net/posts",config);
+    let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/posts",config);
     let data = await res.json();
     return data;
 };
@@ -61,7 +61,7 @@ export const deletePost = async(arg)=>{
         headers:{"content-type": "application/json"}
     }
 
-    let res = await fetch(`https://ea9cb12e1fd707dd59cabd0bcfaca5bf.serveo.net/posts/${arg.id}`, config);
+    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/posts/${arg.id}`, config);
     if(res.status === 404)return `The id provide isn't registred in the database, try with another id`
 
     if(res.status !== 200 ) return{
