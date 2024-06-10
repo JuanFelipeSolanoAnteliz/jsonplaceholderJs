@@ -1,8 +1,8 @@
 import { getAllbums,getAlbumId, addAlbum, deleteAlbums } from "./module/albums.js";
 import { getComment,getCommentId , addComment, deleteComments } from "./module/comments.js";
 import { getPhotos,getPhotosId,addPhotos, deletePhotos } from "./module/photos.js";
-import { getUser } from "./module/user.js";
-import { addPost, deletePost } from "./module/post.js";
+import { getUser,addUser } from "./module/user.js";
+import { getPost, addPost, deletePost } from "./module/post.js";
 
 // console.table(await getUser({userId:"10"}));
 
@@ -88,7 +88,7 @@ let menuPhotos = async()=>{
 `);
 if(menu == 1){
     let search = prompt(`Enter the id photo that you want to find: `)
-    return await getPhotosId(search);
+    return await getPhotosId({postId:search});
 }
 else if( menu == 2){
     let idAlbum = prompt(`Enter the album id: `);
@@ -119,7 +119,7 @@ let menuPosts = async()=>{
 if(menu == 1){
     let id = prompt(`Enter the id that you want to search: `)
   
-    return  alert(await getPhotosId(id));
+    return  alert(await getPost(id));
 }
 else if( menu == 2){
     let userId = prompt(`Enter the user id: `);
@@ -130,7 +130,7 @@ else if( menu == 2){
 }
 else if( menu == 3 ){ 
 let idpost = prompt(`Enter the comment id that you wanna delete.`);
-return await deletePost({id:idpost});
+return await deletePost(idpost);
 }
 
 else{
@@ -142,13 +142,66 @@ let menuUser = async()=>{
     let menu = prompt(`
     user menu
     1. Get
+    2. Add
     `)
     if(menu == 1 ){
         let search = prompt(`Enter the user id that you wanna search: `)
-        let user = await getUser({userId:search});
+        let user = await getUser(search);
         alert(JSON.stringify(user, null, 2));
     }
-}
+    else if(menu == 2){
+        let name = prompt(`Enter the name to the new user: `);
+        let username = prompt(`Enter the username: `);
+        let email = prompt(`Enter one email address: `);
+        
+        let address = {};
+        let street = prompt(`Enter the street addres: `);
+        let suite = prompt(`Enter the suite: `);
+        let city = prompt(`Enter the name of the city: `);
+        let zipcode= prompt(`Enter the zipcode: `);
+        
+        let geo = {};
+        let lat = prompt(`Enter the lat: `);
+        let lng = prompt(`Enter the ing: `);
+
+        let phone = prompt(`Enter a phone number: `);
+        let website= prompt(`Enter a website: `);
+        let company= {};
+
+        let nameComp = prompt(`Enter a name of a company: `);
+        let catchPhrase =prompt(`Enter a catchPhrase: `);
+        let bs = prompt(`Enter a bs to the company: `);
+
+
+        address.street=street;
+        address.suite=suite;
+        address.city=city;
+        address.zipcode=zipcode;
+        
+        geo.lat=lat;
+        geo.lng=lng;
+        address.geo=geo;
+
+        company.nameComp=nameComp;
+        company.catchPhrase=catchPhrase;
+        company.bs=bs;
+        
+        let arg ={
+            name:name,
+            username:username,
+            email:email,
+            address:address,
+            phone:phone,
+            website:website,
+            company:company
+        };
+
+        // return alert(JSON.stringify(user,null,1))
+        return await addUser(arg);
+
+    };
+
+};
 
 //------------------------------------------- main menu----------------------------------------
 let menu = async()=>{
@@ -160,6 +213,8 @@ let menu = async()=>{
     4. Posts
     5. User
     `)
+
+
 
     if(menu == 1)return await menuAlbums();
     else if(menu == 2) return await menuComments();

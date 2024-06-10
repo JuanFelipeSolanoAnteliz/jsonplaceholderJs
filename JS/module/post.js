@@ -10,14 +10,14 @@ export const getPostId = async(arg)=>{
     let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${arg.postId}`);
     if(res.status === 404) return {status: 204, message: `post id doesn't exist`};
     let data = await res.json();
-    return data;
+    return JSON.stringify(data);
 };
 
 
-export const getPost = async()=>{
-    let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/posts");
+export const getPost = async(id)=>{
+    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/posts/${id}`);
     let data =await res.json();
-    return data;
+    return alert(JSON.stringify(data));
 }
 
 const validatePost = async({userId,title,body})=>{
@@ -59,16 +59,17 @@ export const deletePost = async(arg)=>{
     let config ={
         method: "DELETE",
         headers:{"content-type": "application/json"}
-    }
+    };
+
+    let confirmation = confirm(`Are you sure that you want to delete the posts with id ${arg.id}?`)
+    if(confirmation===false) return`operation cancelled :[`
 
     let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/posts/${arg.id}`, config);
     if(res.status === 404)return `The id provide isn't registred in the database, try with another id`
-
     if(res.status !== 200 ) return{
         status: res.status,
         message: `Failed to delete post with id ${arg.id}`
     };
-
     let data = await res.json();
     data.status = 202;
     data.message = `The post ${arg.id} was deleted from the database`;
