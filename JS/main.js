@@ -117,7 +117,9 @@ let menuPosts = async()=>{
 3. Delete
 `);
 if(menu == 1){
-    return await getPost();
+    let id = prompt(`Enter the id that you want to search: `)
+  
+    return  alert(await getPhotosId(id));
 }
 else if( menu == 2){
     let userId = prompt(`Enter the user id: `);
