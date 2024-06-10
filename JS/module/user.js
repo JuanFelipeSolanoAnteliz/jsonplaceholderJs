@@ -57,3 +57,22 @@ export const addUser = async (arg) => {
 };
 
 // ----------------------------------------------------- delete user -------------------------------------------------
+
+
+export const deleteUser =async(userId)=>{
+    let val = await validateGetUser(userId);
+    if(val)return val;
+
+    let config ={
+        method: "DELETE",
+        headers:{"content-type":"application/json"}
+    };
+
+    let confirmation = confirm(`Are you sure that you want to delete the user with id ${userId}?`);
+    if(confirmation === true){
+        let res = await fetch(`https://db9389c548dde0067e872319e959acc6.serveo.net/users`,config);
+        return alert(`User deleted successfully!`);
+    }else{
+        return alert(`operation cancelled :[`)
+    }
+}

@@ -1,7 +1,7 @@
 import { getAllbums,getAlbumId, addAlbum, deleteAlbums } from "./module/albums.js";
 import { getComment,getCommentId , addComment, deleteComments } from "./module/comments.js";
 import { getPhotos,getPhotosId,addPhotos, deletePhotos } from "./module/photos.js";
-import { getUser,addUser } from "./module/user.js";
+import { getUser,addUser,deleteUser } from "./module/user.js";
 import { getPost, addPost, deletePost } from "./module/post.js";
 
 // console.table(await getUser({userId:"10"}));
@@ -199,6 +199,10 @@ let menuUser = async()=>{
         // return alert(JSON.stringify(user,null,1))
         return await addUser(arg);
 
+    }
+    else if(menu == 3){
+        let idDeleted = prompt("Enter the user id that you want to delete: ")
+        return await deleteUser(idDeleted);
     };
 
 };
