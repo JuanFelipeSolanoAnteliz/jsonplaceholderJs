@@ -7,7 +7,7 @@ const validateGetPostid = async ({postId})=>{
 export const getPostId = async(arg)=>{
     let val = await validateGetPostid(arg);
     if(val) return val;
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${arg.postId}`);
+    let res = await fetch(`http://172.16.101.146:5801/comments/${arg.postId}`);
     if(res.status === 404) return {status: 204, message: `post id doesn't exist`};
     let data = await res.json();
     return JSON.stringify(data);
@@ -15,7 +15,7 @@ export const getPostId = async(arg)=>{
 
 
 export const getPost = async(id)=>{
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/posts/${id}`);
+    let res = await fetch(`http://172.16.101.146:5800/posts/${id}`);
     let data =await res.json();
     return alert(JSON.stringify(data));
 }
@@ -38,7 +38,7 @@ export const addPost = async(arg)=>{
         body: JSON.stringify(arg)
 
     }
-    let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/posts",config);
+    let res = await fetch("http://172.16.101.146:5800/posts",config);
     let data = await res.json();
     return data;
 };
@@ -64,7 +64,7 @@ export const deletePost = async(arg)=>{
     let confirmation = confirm(`Are you sure that you want to delete the posts with id ${arg.id}?`)
     if(confirmation===false) return`operation cancelled :[`
 
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/posts/${arg.id}`, config);
+    let res = await fetch(`http://172.16.101.146:5800/posts/${arg.id}`, config);
     if(res.status === 404)return `The id provide isn't registred in the database, try with another id`
     if(res.status !== 200 ) return{
         status: res.status,
@@ -75,6 +75,8 @@ export const deletePost = async(arg)=>{
     data.message = `The post ${arg.id} was deleted from the database`;
     return data;
 }
+
+// ---------------------------------- update ---------------------------------------
 
 
 

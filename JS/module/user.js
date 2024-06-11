@@ -10,7 +10,7 @@ export const getUser = async(arg)=>{
     let val = await validateGetUser(arg);
     if(val) return val;
     
-    let res = await fetch(`https://621215ebcfc77dd3c3a4d5bd963789df.serveo.net/users/${arg}`);
+    let res = await fetch(`http://172.16.101.146:5804/users/${arg}`);
     
     if(res.status === 404) return {status: 204, message: `Username doesn't exist`};
     
@@ -50,7 +50,7 @@ export const addUser = async (arg) => {
     };
     let confirmation = confirm(`Are you sure that you want to add ${JSON.stringify(arg,null,2)} ?`)
     if(confirmation === true){
-        let res = await fetch(`https://621215ebcfc77dd3c3a4d5bd963789df.serveo.net/users`,config);
+        let res = await fetch(`http://172.16.101.146:5804/users`,config);
         let data = res.json();
         return alert(JSON.stringify(arg,null,2)+
         `Was added successfully!`)
@@ -72,7 +72,7 @@ export const deleteUser =async(userId)=>{
 
     let confirmation = confirm(`Are you sure that you want to delete the user with id ${userId}?`);
     if(confirmation === true){
-        let res = await fetch(`https://621215ebcfc77dd3c3a4d5bd963789df.serveo.net/users`,config);
+        let res = await fetch(`http://172.16.101.146:5804/users`,config);
         return alert(`User deleted successfully!`);
     }else{
         return alert(`operation cancelled :[`)
@@ -94,7 +94,7 @@ export const updateUser = async(userId)=>{
 
         let listaConLlaves = []
         for(let keys in data){
-            listaConLlaves.push([keys]);
+            listaConLlaves.push(keys);
         };
         let indexList =[] ;
         let index = 1;
@@ -128,7 +128,7 @@ export const updateUser = async(userId)=>{
                     }
                     else{
                         let newValue = prompt(`Enter a new value to ${listGeo[geoOption-1]} `)
-                        userModfified = data.address.geo[listGeo[geoOption - 1]] = newValue;
+                        data.address.geo[listGeo[geoOption - 1]] = newValue;
                     };
                 }
                 else if(typeof addresoption !== "number" || addresoption === undefined || addresoption > addresslist.length){
@@ -136,9 +136,9 @@ export const updateUser = async(userId)=>{
                     updateUser();
                 } else{
                     let newValue = prompt(`Enter a new value to "${addresslist[addresoption-1]}"`);
-                    userModfified = data.address[addresslist[addresoption - 1]] = newValue;
+                    data.address[addresslist[addresoption - 1]] = newValue;
                 };
-        }else if(option == 8){
+        }else if(option == 8){1
             let listCompanyKeys=[];
             let indexCompany=[];
             let index = 1;
@@ -147,22 +147,24 @@ export const updateUser = async(userId)=>{
                 indexCompany.push(`${index++}. ${[companyKeys]}`);
             }let optioncompany = prompt(`${indexCompany.join(`\n`)}`);
             let newValue = prompt(`enter a new value to the option selected: `);
-            userModfified = data.company[listCompanyKeys[optioncompany-1]]=newValue
+            data.company[listCompanyKeys[optioncompany-1]]=newValue
         }
         else{
             let newValue = prompt(`Enter the new value to "${listaConLlaves[option-1]}"`)
-            userModfified = data[listaConLlaves[option-1]]=newValue;
+            let selection = listaConLlaves[option-1]
+            data[selection]=newValue;
         };
 
         let config = {
             method:"PUT",
             headers:{"content-type":"application/json"},
-            body:JSON.stringify(userModfified)
+            body:JSON.stringify(data)
         };
+        console.log(data);
 
         let confirmation = confirm(`are you sure that you want to update that value? \n ${JSON.stringify(userModfified)}`);
         if(confirmation=== true){
-            let res = await fetch(`https://621215ebcfc77dd3c3a4d5bd963789df.serveo.net/users/${userId}`,config);
+            let res = await fetch(`http://172.16.101.146:5804/users/${userId}`,config);
             data = await res.json();
             return alert(`${JSON.stringify(data)}\n Was updated successfully!`);
         }else{

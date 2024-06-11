@@ -1,7 +1,7 @@
 import { getPostId } from "./post.js"
 
 export const getComment = async()=>{
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments`);
+    let res = await fetch(`http://172.16.101.146:5801/comments`);
     let data = await res.json();
     return data;
 };
@@ -15,7 +15,7 @@ const validateGetcomment = async ({commentId}) => {
 export const getCommentId = async (arg) =>{
     let val = await validateGetcomment(arg);
     if(val)return val;
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${arg.commentId}`);
+    let res = await fetch(`http://172.16.101.146:5801/comments/${arg.commentId}`);
     let data = await res.json();
     return data;
 
@@ -42,7 +42,7 @@ export const addComment = async (arg) =>{
     };
     let confirmation = confirm(`Are you sure that you want to add ${JSON.stringify(arg)} ?`);
     if(confirmation === true){
-        let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments`,config);
+        let res = await fetch(`http://172.16.101.146:5801/comments`,config);
         let data = res.json();
         return alert(JSON.stringify(arg)+`added successfuly!`);
     }else 
@@ -52,7 +52,7 @@ export const addComment = async (arg) =>{
 // ---------------------------------------------- fin add comments ----------------------------------------------
 
 const validateDelete=async(id)=>{
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${id}`)
+    let res = await fetch(`http://172.16.101.146:5801/comments/${id}`)
     if(!res.ok)
         return {
                 status:204,
@@ -70,7 +70,7 @@ export const deleteComments = async (idComment)=>{
     };
     let confirmation = confirm(`are you sure that you want to delete the comment with id ${idComment}?`);
     if(confirmation===true){
-        let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/comments/${idComment}`,config);
+        let res = await fetch(`http://172.16.101.146:5801/comments/${idComment}`,config);
         let data = res.json();
         return `${JSON.stringify(data)} was deleted successfully!`
     }

@@ -2,14 +2,14 @@ import { getAlbumId, getAllbums, } from "./albums.js";
 
 export const getPhotos =async()=>{
     
-    let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/photos");
+    let res = await fetch("http://172.16.101.146:5803/photos");
     let  data = await res.json();
     return data;
 
 };
 
 export const getPhotosId = async(idPhoto)=>{
-    let res= await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/photos/${idPhoto}`);
+    let res= await fetch(`http://172.16.101.146:5803/photos/${idPhoto}`);
     if(!res.ok) return{
         status:204,
         message:`The id wasn't found`
@@ -48,7 +48,7 @@ export const addPhotos = async(newPhoto)=>{
     let confirmation = confirm(`Are you sure that you want to add this photo?`)
     if(confirmation===true){
 
-        let res = await fetch("https://4d012986b9e776981f20439de390dddd.serveo.net/photos",config);
+        let res = await fetch("http://172.16.101.146:5803/photos",config);
         let data = res.json();
         return alert(JSON.stringify(newPhoto)+` was added successfuly!`);
     }else return `operation cacelled :[`
@@ -56,7 +56,7 @@ export const addPhotos = async(newPhoto)=>{
 //-----------------------fin add Photos------------
 
 const validateDeletePhotos = async(idPhoto)=>{
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/photos/${idPhoto}`)
+    let res = await fetch(`http://172.16.101.146:5803/photos/${idPhoto}`)
     if(!res.ok)return{status: 204, message: `Id wasn't found in the database`}
 };
 
@@ -68,8 +68,9 @@ export const deletePhotos = async (firePhoto)=>{
         method: "DELETE",
         headers: {"content-type": "application/json"}
     };
+    
 
-    let res = await fetch(`https://4d012986b9e776981f20439de390dddd.serveo.net/photos/${firePhoto}`,config);
+    let res = await fetch(`http://172.16.101.146:5803/photos/${firePhoto}`,config);
     if(res.status === 404)return `id that was provided isn't registred in the database.`
 
     let data = await res.json();

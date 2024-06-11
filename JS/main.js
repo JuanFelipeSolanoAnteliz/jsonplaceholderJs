@@ -88,7 +88,7 @@ let menuPhotos = async()=>{
 `);
 if(menu == 1){
     let search = prompt(`Enter the id photo that you want to find: `)
-    return await getPhotosId({postId:search});
+    return await getPhotosId(search);
 }
 else if( menu == 2){
     let idAlbum = prompt(`Enter the album id: `);
@@ -118,7 +118,6 @@ let menuPosts = async()=>{
 `);
 if(menu == 1){
     let id = prompt(`Enter the id that you want to search: `)
-  
     return  alert(await getPost(id));
 }
 else if( menu == 2){
