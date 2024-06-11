@@ -1,4 +1,6 @@
 import { getAlbumId, getAllbums, } from "./albums.js";
+import { menu } from '../main.js';
+
 
 export const getPhotos =async()=>{
     
@@ -68,13 +70,20 @@ export const deletePhotos = async (firePhoto)=>{
         method: "DELETE",
         headers: {"content-type": "application/json"}
     };
+    let confirmation = confirm(`Are you sure that you want to delete the data with id ${firePhoto} ?`)
+    if(confirmation=== true){
+
+        let res = await fetch(`http://172.16.101.146:5803/photos/${firePhoto}`,config);
+        if(res.status === 404)return `id that was provided isn't registred in the database.`
+    
+        let data = await res.json();
+        data.status = 202
+        data.message = `The album ${firePhoto} was deleted correctly from de database.`
+        return alert(` ${firePhoto} Was deleted successfuly!`);
+    }else{
+        alert(`Operation cancelled :[`);
+        menu();
+    };
     
 
-    let res = await fetch(`http://172.16.101.146:5803/photos/${firePhoto}`,config);
-    if(res.status === 404)return `id that was provided isn't registred in the database.`
-
-    let data = await res.json();
-    data.status = 202
-    data.message = `The album ${firePhoto} was deleted correctly from de database.`
-    return alert(JSON.stringify(data)+` Was deleted successfuly!`);
 };
