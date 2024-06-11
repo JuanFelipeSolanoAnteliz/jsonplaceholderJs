@@ -1,4 +1,4 @@
-import { getAllbums,getAlbumId, addAlbum, deleteAlbums } from "./module/albums.js";
+import { getAllbums,getAlbumId, addAlbum, deleteAlbums, albumupdate} from "./module/albums.js";
 import { getComment,getCommentId , addComment, deleteComments } from "./module/comments.js";
 import { getPhotos,getPhotosId,addPhotos, deletePhotos } from "./module/photos.js";
 import { getUser,addUser,deleteUser,updateUser } from "./module/user.js";
@@ -31,6 +31,8 @@ export let menuAlbums =async()=>{
     1. get.
     2. Add.
     3. Delete.
+    4. Update.
+    0. Back.
     `);
         if(menu == 1){
             let search = prompt(`Enter the album id that you wanna search: `);
@@ -43,12 +45,17 @@ export let menuAlbums =async()=>{
         }
         else if( menu == 3 ){ 
         let idAlbum = prompt(`Enter de album id that will be delete.`)
-        return console.table(await deleteAlbums({id:idAlbum}))
-    }
-    else{
-        return alert(`the opcion selected isn't a valid option.`)
-    }
-}
+        return alert(await deleteAlbums({id:idAlbum}))
+        }else if(menu == 4){
+            let search =prompt(`Enter the id to update: `)
+            return await albumupdate(search);
+        }else if(menu == 0 || menu === undefined){
+            await menu();
+        }
+        else{
+            return alert(`the opcion selected isn't a valid option.`)
+        };
+};
 // -------------------------------------- menu comments ---------------------------------
 let menuComments= async()=>{
     menu = prompt(`
@@ -213,7 +220,7 @@ let menuUser = async()=>{
 };
 
 //------------------------------------------- main menu----------------------------------------
-export let menu = async()=>{
+export const menu = async()=>{
     let menu = prompt(`
                 menu principal
     1. Albums

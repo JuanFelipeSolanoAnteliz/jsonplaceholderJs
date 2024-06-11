@@ -1,3 +1,4 @@
+import { menu } from "../main.js";
 import { getUser } from "./user.js";
 
 const validateGetAlbum = async ({albumId})=>{
@@ -84,26 +85,49 @@ export const deleteAlbums = async(arg)=>{
 
 // --------------------------------  update albnms ----------------------
 
+const getToUpdate =async(idAlbum)=>{
+    let res = await fetch(`http://172.16.101.146:5802/albums/${idAlbum}`);
+    let data = await res.json();
+    return data;
 
-const validateUpdate = async({albumId})=>{
-    if(typeof albumId !== "string" || albumId === undefined) return {status: 406, message: `The data ${typeof albumId} is not arriving or does not...`}
-    let album = await getAlbumId(albumId);
-    if(album.status === 204) return `The albmum wasn't found`;
 };
 
-export const updateAlbum = async (albumUpdated) =>{
-    let val = validateUpdate({albumId})
-    if(val)return val;
+export const albumupdate = async (idAlbum) =>{
+    let data = await getToUpdate(idAlbum);
+    if(data.ok){
+        return alert(data)
+    }
+    else{
+        let albumkeys = [];
+        let indexAlbum = [];
+        let index = 1;
 
-    let config = {
-        method:"PUT",
-        headers: {"content-type": "application/json"},
-        body:JSON.stringify(albumUpdated)
-    };
-    let confirm = confirm(`Are you sure that you wanna update ${JSON.stringify(albumUpdated)}?`);
-    if(confirm === true ){
-        let res = await fetch(`http://172.16.101.146:5802/albums/${{albumId}}`,config)
-        let data = res.json();
-        return data
+        for(let keys in data){
+            albumkeys.push(keys);
+            indexAlbum.push(`${index++}. ${keys}`);
+        }let  option = Number(prompt(`select one option:\n${indexAlbum.join(`\n`)}`));
+        if(option == 2){
+            alert(`sorry, this data is immutable :[`);
+        }else if(typeof option !== "number" || option===undefined || option > albumkeys.length){
+            alert(`the data provided is not avalible, try again.`);
+        }else{
+            let newValue = prompt(`enter the new value to ${[albumkeys[option-1]]}`)
+            data[albumkeys[option-1]]=newValue;
+
+            let config ={
+                method:"PUT",
+                headers: {"content-type":"application/json"},
+                body: JSON.stringify(data)
+            };
+            let confirmation = confirm(`Are you sure that you want to update \n ${JSON.stringify(data,null,2)}`);
+            if(confirmation===true){
+                let res = await fetch(`http://172.16.101.146:5802/albums/${idAlbum}`,config);
+                alert(`the data was updated successfully!`)
+                menu();
+            }else{
+                alert(`operation cancelled :[`)
+                menu();
+            };
+        };
     };
 };
