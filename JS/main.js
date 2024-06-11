@@ -1,7 +1,7 @@
 import { getAllbums,getAlbumId, addAlbum, deleteAlbums } from "./module/albums.js";
 import { getComment,getCommentId , addComment, deleteComments } from "./module/comments.js";
 import { getPhotos,getPhotosId,addPhotos, deletePhotos } from "./module/photos.js";
-import { getUser,addUser,deleteUser } from "./module/user.js";
+import { getUser,addUser,deleteUser,updateUser } from "./module/user.js";
 import { getPost, addPost, deletePost } from "./module/post.js";
 
 // console.table(await getUser({userId:"10"}));
@@ -24,7 +24,7 @@ import { getPost, addPost, deletePost } from "./module/post.js";
 // --------------------------------------  menu -----------------------------------------
 
 // -------------------------------------- menu album ------------------------------------
-let menuAlbums =async()=>{
+export let menuAlbums =async()=>{
     
     let menu = prompt(`
         Album menu 
@@ -143,6 +143,8 @@ let menuUser = async()=>{
     user menu
     1. Get
     2. Add
+    3. Delete
+    4. Update
     `)
     if(menu == 1 ){
         let search = prompt(`Enter the user id that you wanna search: `)
@@ -203,12 +205,16 @@ let menuUser = async()=>{
     else if(menu == 3){
         let idDeleted = prompt("Enter the user id that you want to delete: ")
         return await deleteUser(idDeleted);
-    };
+    }
+    else if(menu == 4){
+        let idToUpdate =prompt(`Enter the user id that you want to update: `)
+        return await updateUser(idToUpdate);
+    }
 
 };
 
 //------------------------------------------- main menu----------------------------------------
-let menu = async()=>{
+export let menu = async()=>{
     let menu = prompt(`
                 menu principal
     1. Albums

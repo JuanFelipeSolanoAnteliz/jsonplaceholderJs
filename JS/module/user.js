@@ -1,3 +1,5 @@
+import { menu } from '../main.js';
+
 const validateGetUser = async(userId)=>{
     if(typeof userId !== "string" ||userId === undefined) 
         return{status: 406, message:`This user dosen't exist in the database`};
@@ -8,7 +10,7 @@ export const getUser = async(arg)=>{
     let val = await validateGetUser(arg);
     if(val) return val;
     
-    let res = await fetch(`https://db9389c548dde0067e872319e959acc6.serveo.net/users/${arg}`);
+    let res = await fetch(`https://621215ebcfc77dd3c3a4d5bd963789df.serveo.net/users/${arg}`);
     
     if(res.status === 404) return {status: 204, message: `Username doesn't exist`};
     
@@ -48,7 +50,7 @@ export const addUser = async (arg) => {
     };
     let confirmation = confirm(`Are you sure that you want to add ${JSON.stringify(arg,null,2)} ?`)
     if(confirmation === true){
-        let res = await fetch(`https://db9389c548dde0067e872319e959acc6.serveo.net/users`,config);
+        let res = await fetch(`https://621215ebcfc77dd3c3a4d5bd963789df.serveo.net/users`,config);
         let data = res.json();
         return alert(JSON.stringify(arg,null,2)+
         `Was added successfully!`)
@@ -70,9 +72,103 @@ export const deleteUser =async(userId)=>{
 
     let confirmation = confirm(`Are you sure that you want to delete the user with id ${userId}?`);
     if(confirmation === true){
-        let res = await fetch(`https://db9389c548dde0067e872319e959acc6.serveo.net/users`,config);
+        let res = await fetch(`https://621215ebcfc77dd3c3a4d5bd963789df.serveo.net/users`,config);
         return alert(`User deleted successfully!`);
     }else{
         return alert(`operation cancelled :[`)
-    }
-}
+    };
+};
+
+// -------------------------------------------- update user ------------------------------------------------------------
+
+
+
+export const updateUser = async(userId)=>{
+    let userModfified;
+    while(true){
+        let data = await getUser(userId)
+        if(data.ok){
+            alert(JSON.stringify(data,null,2))
+            continue;
+        };
+
+        let listaConLlaves = []
+        for(let keys in data){
+            listaConLlaves.push([keys]);
+        };
+        let indexList =[] ;
+        let index = 1;
+        for(let i in data){
+            indexList.push(`${index++}. ${i}`)
+        }let option = Number(prompt(indexList.join(`\n`)));
+        if(typeof option !== "number" || option === undefined || option > listaConLlaves.length){
+            alert({status:406, message:"the option is not in the valid options, try again."})
+            updateUser();
+        };
+        if(option == 5 ){
+            let addresslist = [];
+            let addressIndex = []
+            let index = 1;
+            for(let addressKeys in data.address){
+                addresslist.push([addressKeys]);
+                addressIndex.push(`${index++}. ${[addressKeys]}`)
+            }let addresoption = prompt(addressIndex.join(`\n`));
+                if( addresoption == 5){
+                    let listGeo = [];
+                    let indexGeo = [];
+                    let index = 1;
+
+                    for(let geoKeys in data.address.geo){
+                        listGeo.push([geoKeys]);
+                        indexGeo.push(`${index++}. ${[geoKeys]}`);
+                    }let geoOption= Number(prompt(indexGeo.join(`\n`)));
+                    if(typeof geoOption !== "number" || geoOption === undefined || geoOption > listGeo.length){
+                        alert({status:406, message:"the option is not in the valid options, try again."})
+                        updateUser();
+                    }
+                    else{
+                        let newValue = prompt(`Enter a new value to ${listGeo[geoOption-1]} `)
+                        userModfified = data.address.geo[listGeo[geoOption - 1]] = newValue;
+                    };
+                }
+                else if(typeof addresoption !== "number" || addresoption === undefined || addresoption > addresslist.length){
+                    alert({status:406, message:"the option is not in the valid options, try again."})
+                    updateUser();
+                } else{
+                    let newValue = prompt(`Enter a new value to "${addresslist[addresoption-1]}"`);
+                    userModfified = data.address[addresslist[addresoption - 1]] = newValue;
+                };
+        }else if(option == 8){
+            let listCompanyKeys=[];
+            let indexCompany=[];
+            let index = 1;
+            for(let companyKeys in data.company){
+                listCompanyKeys.push([companyKeys]);
+                indexCompany.push(`${index++}. ${[companyKeys]}`);
+            }let optioncompany = prompt(`${indexCompany.join(`\n`)}`);
+            let newValue = prompt(`enter a new value to the option selected: `);
+            userModfified = data.company[listCompanyKeys[optioncompany-1]]=newValue
+        }
+        else{
+            let newValue = prompt(`Enter the new value to "${listaConLlaves[option-1]}"`)
+            userModfified = data[listaConLlaves[option-1]]=newValue;
+        };
+
+        let config = {
+            method:"PUT",
+            headers:{"content-type":"application/json"},
+            body:JSON.stringify(userModfified)
+        };
+
+        let confirmation = confirm(`are you sure that you want to update that value? \n ${JSON.stringify(userModfified)}`);
+        if(confirmation=== true){
+            let res = await fetch(`https://621215ebcfc77dd3c3a4d5bd963789df.serveo.net/users/${userId}`,config);
+            data = await res.json();
+            return alert(`${JSON.stringify(data)}\n Was updated successfully!`);
+        }else{
+            alert("operation cancelled :[")
+            return menu();
+        };
+
+    };
+};
