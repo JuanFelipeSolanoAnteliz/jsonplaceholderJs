@@ -107,10 +107,10 @@ export const updateUser = async(userId)=>{
         };
         if(option == 5 ){
             let addresslist = [];
-            let addressIndex = []
+            let addressIndex = [];
             let index = 1;
             for(let addressKeys in data.address){
-                addresslist.push([addressKeys]);
+                addresslist.push(addressKeys);
                 addressIndex.push(`${index++}. ${[addressKeys]}`)
             }let addresoption = prompt(addressIndex.join(`\n`));
                 if( addresoption == 5){
@@ -119,7 +119,7 @@ export const updateUser = async(userId)=>{
                     let index = 1;
 
                     for(let geoKeys in data.address.geo){
-                        listGeo.push([geoKeys]);
+                        listGeo.push(geoKeys);
                         indexGeo.push(`${index++}. ${[geoKeys]}`);
                     }let geoOption= Number(prompt(indexGeo.join(`\n`)));
                     if(typeof geoOption !== "number" || geoOption === undefined || geoOption > listGeo.length){

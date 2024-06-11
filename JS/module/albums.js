@@ -122,11 +122,9 @@ export const albumupdate = async (idAlbum) =>{
             let confirmation = confirm(`Are you sure that you want to update \n ${JSON.stringify(data,null,2)}`);
             if(confirmation===true){
                 let res = await fetch(`http://172.16.101.146:5802/albums/${idAlbum}`,config);
-                alert(`the data was updated successfully!`)
-                menu();
+                alert(`the data was updated successfully!`);
             }else{
-                alert(`operation cancelled :[`)
-                menu();
+                alert(`operation cancelled :[`);
             };
         };
     };

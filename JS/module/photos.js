@@ -84,6 +84,4 @@ export const deletePhotos = async (firePhoto)=>{
         alert(`Operation cancelled :[`);
         menu();
     };
-    
-
 };
