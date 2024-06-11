@@ -1,6 +1,6 @@
 import { getAllbums, getAlbumId, addAlbum, deleteAlbums, albumupdate } from "./module/albums.js";
 import { getComment, getCommentId, addComment, deleteComments, updateComments } from "./module/comments.js";
-import { getPhotos, getPhotosId, addPhotos, deletePhotos } from "./module/photos.js";
+import { getPhotos, getPhotosId, addPhotos, deletePhotos,updatePhoto } from "./module/photos.js";
 import { getUser, addUser, deleteUser, updateUser } from "./module/user.js";
 import { getPost, addPost, deletePost } from "./module/post.js";
 
@@ -91,11 +91,12 @@ let menuComments = async () => {
 };
 // ------------------------------------- menuPhotos -------------------------------------
 let menuPhotos = async () => {
-    menu = prompt(`
+    let menu = prompt(`
     menu Photos
 1. Get 
 2. Add
 3. Delete
+4. Update
 `);
     if (menu == 1) {
         let search = prompt(`Enter the id photo that you want to find: `)
@@ -112,6 +113,10 @@ let menuPhotos = async () => {
     else if (menu == 3) {
         let firePhoto = prompt(`Enter the comment id that you wanna delete.`);
         return await deletePhotos(firePhoto);
+    }
+    else if(menu == 4){
+        let photoid = prompt(`Enter the comment id that you wanna update.`);
+        return await updatePhoto(photoid);
     }
 
     else {
